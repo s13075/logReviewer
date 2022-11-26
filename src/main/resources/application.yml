@@ -1,0 +1,24 @@
+spring:
+   datasource:
+      generate-unique-name: false
+      name: my-test-db
+      url: jdbc:h2:mem:my-test-db
+      username: sa
+      password:
+      hikari:
+         connection-test-query: SELECT 1
+
+   jpa:
+      database: H2
+      show-sql: true
+      generate-ddl: true
+      hibernate:
+         dll-auto: validate
+      #?adowanie danych pocz?tkowych po incjalizacji hibernate
+      defer-datasource-initialization: true
+
+
+   sql:
+     init:
+        mode: always
+        platform: h2

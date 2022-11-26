@@ -16,16 +16,23 @@ public class Application {
     @NotNull
     private String inventoryNo;
     @Column
+    @NotNull
     private String name;
     @Column
+    @NotNull
     private Boolean piiData;
     @Column
+    @NotNull
     private Boolean criticalFunction;
     @Column
+    @NotNull
     private Boolean financialOperation;
     @Column
+    @NotNull
     private String supportContactGroup;
 
+    @Column
+    @NotNull
     private String smeEmployee;
 
 }
