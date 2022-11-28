@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ApplicationRepository extends CrudRepository<Application, UUID> {
+    List<Application> findAll();
     List<Application> findApplicationsByName(String name);
 }

@@ -1,6 +1,8 @@
 package com.pjatkInz.logReviewer.controller;
 
 import com.pjatkInz.logReviewer.dto.ApplicationDto;
+import com.pjatkInz.logReviewer.service.ApplicationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +15,12 @@ import java.util.List;
 @RequestMapping(("api/v1/applications"))
 public class ApplicationController {
 
+    @Autowired
+    private ApplicationService applicationService;
+
     @GetMapping
     public ResponseEntity<List<ApplicationDto>> getApplications(){
-
-        ApplicationDto applicationDto = ApplicationDto.builder()
-                .name("firstApp")
-                .build();
-        List<ApplicationDto> applications = new ArrayList<>();
-        applications.add(applicationDto);
-
+        List<ApplicationDto> applications = applicationService.getApplications();
         return ResponseEntity.ok(applications);
     }
 }

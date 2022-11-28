@@ -38,7 +38,6 @@ public class ApplicationServiceTest {
         when(applicationRepository.findAll()).thenReturn(applications);
         when(applicationMapper.applicationToApplicationDto(application)).thenReturn(applicationDto);
         List<ApplicationDto> applicationDtos = applicationService.getApplications();
-
         assertThat(1).isEqualTo(applicationDtos.size());
         assertThat(applicationDtos.get(0))
                 .isNotNull()

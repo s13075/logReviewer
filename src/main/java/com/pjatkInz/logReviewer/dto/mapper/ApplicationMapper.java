@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 public interface ApplicationMapper {
     //ApplicationMapper INSTANCE = Mapper.getMapper(ApplicationMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+    //@Mapping(target = "id", ignore = true)
     ApplicationDto applicationToApplicationDto(Application application);
 }

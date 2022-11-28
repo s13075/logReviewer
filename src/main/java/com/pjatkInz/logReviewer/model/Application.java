@@ -17,10 +17,10 @@ import java.util.UUID;
 public class Application {
 
     @Id
+    @Column(columnDefinition="uuid")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "UUID")
     private UUID id;
 
-    @Column
     @NotNull
     private String inventoryNo;
     @Column
