@@ -11,8 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,6 +50,18 @@ public class ApplicationServiceTest {
                 .hasFieldOrPropertyWithValue("name","Service Test Application")
                 .hasFieldOrPropertyWithValue("supportContactGroup","support@testgroup")
                 .hasFieldOrPropertyWithValue("smeEmployee","SMEname");
+    }
+
+    @Test
+    void shouldReturnApplicationDtoByTitleIgnoreCase() {
+        List<Application> applications = new ArrayList<>();
+        Application application = getApplication();
+        applications.add(application);
+        ApplicationDto applicationDto = getApplicationDto();
+        when(applicationRepository.findApplicationsByNameIgnoreCase(anyString())).thenReturn(Collections.singletonList(getApplication()));
+        when(applicationMapper.applicationToApplicationDto(application)).thenReturn(applicationDto);
+        List<ApplicationDto> applicationDtos = applicationService.getApplicationsByName("service test application");
+        assertThat(applicationDtos.size()).isEqualTo(1);
     }
 
     private Application getApplication(){

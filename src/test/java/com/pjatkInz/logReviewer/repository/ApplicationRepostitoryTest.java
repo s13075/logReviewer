@@ -34,4 +34,11 @@ public class ApplicationRepostitoryTest {
         List<Application> testApplication = applicationRepostitory.findApplicationsByName("TestApplication");
         Assertions.assertEquals(testApplication.size(),1);
     }
+
+    @Test
+    @Sql(scripts={"classpath:insertInitialApplicationRecordsForTest.sql"})
+    void shouldReturnOneApplicationWhenTitleIsTestApplicationIgnoreCase(){
+        List<Application> testApplication = applicationRepostitory.findApplicationsByNameIgnoreCase("testapplication");
+        Assertions.assertEquals(testApplication.size(),1);
+    }
 }

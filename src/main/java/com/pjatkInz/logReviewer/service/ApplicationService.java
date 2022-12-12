@@ -37,4 +37,10 @@ public class ApplicationService {
     }
 
 
+    public List<ApplicationDto> getApplicationsByName(String name) {
+        Iterable<Application> applications = applicationRepository.findApplicationsByNameIgnoreCase(name);
+        return StreamSupport.stream(applications.spliterator(),false)
+                .map(convertApplicationToApplicationDto())
+                .collect(Collectors.toList());
+    }
 }

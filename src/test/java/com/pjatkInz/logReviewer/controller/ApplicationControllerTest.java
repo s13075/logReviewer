@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +31,16 @@ public class ApplicationControllerTest {
         applicationDtos.add(getApplicationDto());
         when(applicationService.getApplications()).thenReturn(applicationDtos);
         ResponseEntity<List<ApplicationDto>> applications = applicationController.getApplications();
+        assertThat(applications.getBody()).isNotNull();
+        assertThat(applications.getBody().size()).isEqualTo(1);
+    }
+
+    @Test
+    void shouldReturnApplicationDtoListWhenGetApplicationsByNameCalled(){
+        List<ApplicationDto> applicationDtos = new ArrayList<>();
+        applicationDtos.add(getApplicationDto());
+        when(applicationService.getApplicationsByName(anyString())).thenReturn(applicationDtos);
+        ResponseEntity<List<ApplicationDto>> applications = applicationController.getApplicationsByName("service test application");
         assertThat(applications.getBody()).isNotNull();
         assertThat(applications.getBody().size()).isEqualTo(1);
     }

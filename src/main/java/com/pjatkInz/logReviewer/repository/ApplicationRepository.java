@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ApplicationRepository extends CrudRepository<Application, UUID> {
     List<Application> findAll();
     List<Application> findApplicationsByName(String name);
+    List<Application> findApplicationsByNameIgnoreCase(String name);
 }
