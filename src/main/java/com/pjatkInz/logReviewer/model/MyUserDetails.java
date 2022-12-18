@@ -20,7 +20,7 @@ public class MyUserDetails implements UserDetails {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (MyRole role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            authorities.add(new SimpleGrantedAuthority(role.getEnumRole().name()));
         }
 
         return authorities;

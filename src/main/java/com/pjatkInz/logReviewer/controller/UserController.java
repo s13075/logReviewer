@@ -4,6 +4,7 @@ import com.pjatkInz.logReviewer.configuration.JwtUtil;
 import com.pjatkInz.logReviewer.dto.AuthenticationRequest;
 import com.pjatkInz.logReviewer.dto.AuthenticationResponse;
 import com.pjatkInz.logReviewer.dto.UserDto;
+import com.pjatkInz.logReviewer.model.MyUserDetails;
 import com.pjatkInz.logReviewer.service.MyUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

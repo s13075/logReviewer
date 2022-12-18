@@ -28,6 +28,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
+        //TO DO
+
+
         String token = tokenWithBearer.substring(7);
         Authentication authentication = jwtUtil.validateToken(token);
 

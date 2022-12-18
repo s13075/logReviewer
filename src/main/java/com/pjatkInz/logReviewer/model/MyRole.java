@@ -23,6 +23,7 @@ public class MyRole {
 
     @Column
     @NotNull
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private EMyRole enumRole;
 
 }
