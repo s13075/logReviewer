@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Application {
+public class MyRole {
 
     @Id
     @Column(columnDefinition="uuid")
@@ -23,25 +23,6 @@ public class Application {
 
     @Column
     @NotNull
-    private String inventoryNo;
-    @Column
-    @NotNull
     private String name;
-    @Column
-    @NotNull
-    private Boolean piiData;
-    @Column
-    @NotNull
-    private Boolean criticalFunction;
-    @Column
-    @NotNull
-    private Boolean financialOperation;
-    @Column
-    @NotNull
-    private String supportContactGroup;
-
-    @Column
-    @NotNull
-    private String smeEmployee;
 
 }
