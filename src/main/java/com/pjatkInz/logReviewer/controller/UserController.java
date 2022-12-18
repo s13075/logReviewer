@@ -4,7 +4,7 @@ import com.pjatkInz.logReviewer.configuration.JwtUtil;
 import com.pjatkInz.logReviewer.dto.AuthenticationRequest;
 import com.pjatkInz.logReviewer.dto.AuthenticationResponse;
 import com.pjatkInz.logReviewer.dto.UserDto;
-import com.pjatkInz.logReviewer.service.UserService;
+import com.pjatkInz.logReviewer.service.MyUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,12 +24,12 @@ import java.util.UUID;
 public class UserController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserService userService;
+    private final MyUserDetailsService myUserDetailsService;
     private final JwtUtil jwtUtil;
 
-    public UserController(AuthenticationManager authenticationManager, UserService userService, JwtUtil jwtUtil) {
+    public UserController(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
-        this.userService = userService;
+        this.myUserDetailsService = myUserDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -41,7 +41,7 @@ public class UserController {
         }catch(BadCredentialsException ex){
             throw new RuntimeException("Username or password incorrect");
         }
-        UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getEmail());
+        UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
         String token = jwtUtil.generateToken(userDetails);
 
@@ -50,7 +50,7 @@ public class UserController {
     }
     @PostMapping("/register")
     public ResponseEntity<UUID> addUser(@Valid @RequestBody UserDto userDto){
-        UUID uuid = userService.addUser(userDto);
+        UUID uuid = myUserDetailsService.addUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(uuid);
     }
 }

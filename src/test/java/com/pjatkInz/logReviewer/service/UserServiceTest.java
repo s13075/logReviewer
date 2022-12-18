@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserServiceTest {
 
     @InjectMocks
-    private UserService userService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Mock
     private UserRepository userRepository;
@@ -41,7 +41,7 @@ class UserServiceTest {
         when(userRepository.saveAndFlush(any())).thenReturn(getUser(id));
         when(userMapper.userDtoToUser(any())).thenReturn(getUser(id));
         //when(userMapper.userToUserDto(any())).thenReturn(getUserDto());
-        UUID uuid = userService.addUser(getUserDto());
+        UUID uuid = myUserDetailsService.addUser(getUserDto());
         assertThat(uuid).isNotNull();
         assertThat(uuid).isEqualTo(id);
 
@@ -52,7 +52,7 @@ class UserServiceTest {
         when(userRepository.findByEmail(any())).thenReturn(getUserByMail());
         when(userMapper.userToUserDto(any())).thenReturn(getUserDto());
 
-        UserDto userDto = userService.getUserByEmail("testUser@emial.com");
+        UserDto userDto = myUserDetailsService.getUserByEmail("testUser@emial.com");
 
         assertThat(userDto.getId()).isNotNull();
         assertThat(userDto.getId()).isEqualTo(UUID.fromString("123e4567-e89b-42d3-a456-556642440004"));
@@ -62,7 +62,7 @@ class UserServiceTest {
     void shouldThrowErrorWhenCalledWithUnknownUserEmail() {
 
         when(userRepository.findByEmail(any())).thenThrow(new RuntimeException("error"));
-        assertThatThrownBy(() -> userService.getUserByEmail("testUser@emial.com")).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> myUserDetailsService.getUserByEmail("testUser@emial.com")).isInstanceOf(RuntimeException.class);
 
     }
 

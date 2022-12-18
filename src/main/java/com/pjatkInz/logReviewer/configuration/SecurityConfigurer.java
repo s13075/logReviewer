@@ -1,6 +1,6 @@
 package com.pjatkInz.logReviewer.configuration;
 
-import com.pjatkInz.logReviewer.service.UserService;
+import com.pjatkInz.logReviewer.service.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -20,12 +20,12 @@ import java.util.Collections;
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final MyUserDetailsService myUserDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfigurer(UserService userService, PasswordEncoder passwordEncoder, JwtRequestFilter jwtRequestFilter) {
-        this.userService = userService;
+    public SecurityConfigurer(MyUserDetailsService myUserDetailsService, PasswordEncoder passwordEncoder, JwtRequestFilter jwtRequestFilter) {
+        this.myUserDetailsService = myUserDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.jwtRequestFilter = jwtRequestFilter;
     }
@@ -43,7 +43,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     private AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(myUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }

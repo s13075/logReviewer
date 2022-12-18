@@ -27,8 +27,6 @@ public class MyUser {
     @NotNull
     private String name;
 
-
-
     @Column
     @NotNull
     private String email;
@@ -36,6 +34,11 @@ public class MyUser {
     @Column
     @NotNull
     private String password;
+
+    @Column
+    @NotNull
+    private boolean enabled;
+
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<MyRole> roles = new HashSet<>();

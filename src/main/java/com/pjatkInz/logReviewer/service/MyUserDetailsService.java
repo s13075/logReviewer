@@ -16,13 +16,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class UserService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapperImpl userMapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapperImpl userMapper) {
+    public MyUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapperImpl userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
