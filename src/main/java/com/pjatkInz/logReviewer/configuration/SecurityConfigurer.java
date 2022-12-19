@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -27,7 +28,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final MyUserDetailsService myUserDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtRequestFilter jwtRequestFilter;
-    private AuthEntryPointJwt unauthorizedHandler;
 
     public SecurityConfigurer(MyUserDetailsService myUserDetailsService, PasswordEncoder passwordEncoder, JwtRequestFilter jwtRequestFilter) {
         this.myUserDetailsService = myUserDetailsService;
@@ -65,12 +65,23 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                     corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
                     return corsConfiguration;
                 })
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement()
+                .and();
+
+        http.exceptionHandling().authenticationEntryPoint(
+                    (request, response, ex) -> {
+                        response.sendError(
+                                HttpServletResponse.SC_UNAUTHORIZED,
+                                ex.getMessage()
+                        );
+                    }
+                )
+                .and();
+
+        http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .and();
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/v1/login").permitAll()
                 .antMatchers("/api/v1/register").permitAll()
