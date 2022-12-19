@@ -18,9 +18,6 @@ public class PermissionsChange extends InformationSecurityAdministrationEvent{
 
     @Column
     @NotNull
-    private String requestNumber;
+    private String additionalDetails;
 
-    @Column
-    @NotNull
-    private String status;
 }

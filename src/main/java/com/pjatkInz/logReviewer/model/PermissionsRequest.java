@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
@@ -18,5 +19,12 @@ public class PermissionsRequest extends InformationSecurityAdministrationEvent{
 
     @Column
     @NotNull
-    private String additionalDetails;
+    private String requestNumber;
+
+    @Column
+    @NotNull
+    private String status;
+
+    @ManyToOne
+    private MyUser approverUser;
 }

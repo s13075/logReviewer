@@ -48,4 +48,8 @@ public class Application {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Reviewer> reviewers = new HashSet<>();
 
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ApplicationRole> applicationRoles;
+
 }

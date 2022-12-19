@@ -1,6 +1,5 @@
 package com.pjatkInz.logReviewer.model;
 
-
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationRole {
+public class Justification {
 
     @Id
     @Column(columnDefinition="uuid")
@@ -24,8 +24,12 @@ public class ApplicationRole {
 
     @Column
     @NotNull
-    private String roleName;
+    private String status;
 
-    @ManyToOne
-    private Application application;
+    @OneToOne
+    private Reconciliation reconciliation;
+
+    @OneToMany
+    private Set<Escalation> escalations;
+
 }
