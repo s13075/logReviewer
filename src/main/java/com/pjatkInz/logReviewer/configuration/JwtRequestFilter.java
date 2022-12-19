@@ -1,6 +1,7 @@
 package com.pjatkInz.logReviewer.configuration;
 
 import com.pjatkInz.logReviewer.service.MyUserDetailsService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,16 +33,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        String tokenWithBearer = request.getHeader("Authorization");
-        if(tokenWithBearer == null ||!tokenWithBearer.startsWith("Bearer")){
+        String authorizationHeaderValue = getAuthorizationHeaderValue(request);
+
+        if(authorizationHeaderValue == null ||!authorizationHeaderValue.startsWith("Bearer")){
             filterChain.doFilter(request,response);
             return;
         }
-
-        String token = tokenWithBearer.substring(7);
+        String token = tokenWithoutBearerSufix(authorizationHeaderValue);
         if (token != null && jwtUtil.boolValidateToken(token)) {
             String username = jwtUtil.getUserNameFromJwtToken(token);
-            System.out.println(username);
             UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
@@ -51,5 +51,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request,response);
 
+    }
+
+    private String getAuthorizationHeaderValue(HttpServletRequest request){
+        return request.getHeader(HttpHeaders.AUTHORIZATION);
+    }
+
+    private String tokenWithoutBearerSufix(String authorizationHeaderValue){
+        return authorizationHeaderValue.substring(7);
     }
 }

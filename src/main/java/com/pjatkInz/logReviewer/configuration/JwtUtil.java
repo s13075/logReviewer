@@ -20,11 +20,6 @@ public class JwtUtil {
     private String SECRET_KEY = "Secret";
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    public String generateOldToken(UserDetails userDetails){
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
-    }
-
     public String generateToken(UserDetails userDetails){
         return Jwts.builder()
                 .setSubject((userDetails.getUsername()))
@@ -34,31 +29,6 @@ public class JwtUtil {
     }
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
-    }
-
-    private String createToken(Map<String, Object> claims, String username) {
-
-        return Jwts.builder().setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000 * 60 * 60 * 24*7))
-                .signWith(SignatureAlgorithm.HS256,SECRET_KEY).compact();
-    }
-
-    public Authentication validateToken(String token) {
-
-        Claims claims = extractClaims(token);
-        if(claims.getExpiration().before(new Date())){
-            return null;
-        }
-        String username = claims.getSubject();
-
-
-        return new UsernamePasswordAuthenticationToken(
-                username,
-                null,
-                new ArrayList<>()
-        );
     }
 
     public boolean boolValidateToken(String token) {
@@ -79,10 +49,6 @@ public class JwtUtil {
 
         return false;
 
-
     }
 
-    private Claims extractClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-    }
 }

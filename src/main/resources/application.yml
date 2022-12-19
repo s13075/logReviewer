@@ -24,4 +24,4 @@ spring:
         platform: h2
 logging:
    level:
-      root: debug
+      root: info
