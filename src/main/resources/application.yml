@@ -22,3 +22,6 @@ spring:
      init:
         mode: always
         platform: h2
+logging:
+   level:
+      root: debug

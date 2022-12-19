@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,15 +38,20 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequest authenticationRequest){
+        String token;
         try{
-            authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            token = jwtUtil.generateToken(authentication);
+
         }catch(BadCredentialsException ex){
             throw new RuntimeException("Username or password incorrect");
         }
         UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
-        String token = jwtUtil.generateToken(userDetails);
+
 
         return ResponseEntity.ok(new AuthenticationResponse("Bearer " + token));
 
