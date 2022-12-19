@@ -19,14 +19,14 @@ public class ApplicationController {
 
 
     @GetMapping
-    @PreAuthorize("hasRole('REVIEWER_ROLE')")
+    @PreAuthorize("hasRole('REVIEWER')")
     public ResponseEntity<List<ApplicationDto>> getApplications(){
         List<ApplicationDto> applications = applicationService.getApplications();
         return ResponseEntity.ok(applications);
     }
 
     @GetMapping("/{title}")
-    @PreAuthorize("hasRole('ADMIN_ROLE')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ApplicationDto>> getApplicationsByName(@PathVariable("title") String title) {
         List<ApplicationDto> applications = applicationService.getApplicationsByName(title);
         return ResponseEntity.ok(applications);
