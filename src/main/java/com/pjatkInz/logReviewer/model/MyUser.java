@@ -29,6 +29,14 @@ public class MyUser {
 
     @Column
     @NotNull
+    private String surname;
+
+    @Column
+    @NotNull
+    private String empoleeId;
+
+    @Column
+    @NotNull
     private String email;
 
     @Column

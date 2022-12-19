@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -39,9 +41,11 @@ public class Application {
     @Column
     @NotNull
     private String supportContactGroup;
-
     @Column
     @NotNull
     private String smeEmployee;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Reviewer> reviewers = new HashSet<>();
 
 }
