@@ -38,21 +38,18 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequest authenticationRequest){
-        String token;
-        try{
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),authenticationRequest.getPassword()));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            token = jwtUtil.generateToken(authentication);
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getEmail(),
+                            authenticationRequest.getPassword()));
 
         }catch(BadCredentialsException ex){
             throw new RuntimeException("Username or password incorrect");
         }
         UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-
-
-
+        String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse("Bearer " + token));
 
     }

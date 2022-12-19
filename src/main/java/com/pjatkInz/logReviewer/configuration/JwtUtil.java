@@ -16,18 +16,18 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
+
     private String SECRET_KEY = "Secret";
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-    public String generateToken(UserDetails userDetails){
+    public String generateOldToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
 
-    public String generateToken(Authentication authentication){
-        MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
+    public String generateToken(UserDetails userDetails){
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
+                .setSubject((userDetails.getUsername()))
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();

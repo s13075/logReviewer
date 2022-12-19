@@ -47,7 +47,6 @@ public class MyUserDetailsService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setId(null);
         user.setEnabled(true);
-
         MyRole role = roleRepository.findByEnumRole(EMyRole.REVIEWER);
         Set<MyRole> roles = new HashSet<>();
         roles.add(role);
