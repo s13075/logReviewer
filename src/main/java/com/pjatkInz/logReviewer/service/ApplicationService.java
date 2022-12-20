@@ -19,7 +19,7 @@ public class ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final ApplicationMapper applicationMapper;
 
-    public ApplicationService(ApplicationRepository applicationRepository, ApplicationMapperImpl applicationMapper){
+    public ApplicationService(ApplicationRepository applicationRepository, ApplicationMapper applicationMapper){
         this.applicationRepository = applicationRepository;
         this.applicationMapper = applicationMapper;
     }

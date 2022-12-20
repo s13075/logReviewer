@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -17,6 +18,10 @@ public class UserDto {
     private UUID id;
     @NotNull
     private String name;
+    @NotNull
+    private String surname;
+    @NotNull
+    private String empoleeId;
     @NotNull
     private String email;
     @NotNull

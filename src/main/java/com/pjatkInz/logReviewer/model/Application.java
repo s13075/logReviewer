@@ -45,11 +45,11 @@ public class Application {
     @NotNull
     private String smeEmployee;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Reviewer> reviewers = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<MyUser> reviewers = new HashSet<>();
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy ="application",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ApplicationRole> applicationRoles;
 
 }

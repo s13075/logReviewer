@@ -26,6 +26,6 @@ public class ApplicationRole {
     @NotNull
     private String roleName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Application application;
 }

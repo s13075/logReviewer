@@ -1,4 +1,15 @@
 insert into APPLICATION(ID,INVENTORY_NO,NAME,CRITICAL_FUNCTION, FINANCIAL_OPERATION, PII_DATA, SME_EMPLOYEE, SUPPORT_CONTACT_GROUP) VALUES
-    ('123e4567-e89b-42d3-a456-556642440001',100001,'BankingApplication',true,true,true,'Pracownik_SME1','supportGroup@BankingApplication.com'),
-    ('123e4567-e89b-42d3-a456-556642440002',100002,'HRApplication',false,false,true,'Pracownik_SME2','supportGroup@HRApplication.com'),
-    ('123e4567-e89b-42d3-a456-556642440003',100002,'QAApplication',false,true,false,'Pracownik_SME3','supportGroup@QAApplication.com');
+    ('123e4567-e89b-42d3-a456-556642410001',100001,'BankingApplication',true,true,true,'Pracownik_SME1','supportGroup@BankingApplication.com'),
+    ('123e4567-e89b-42d3-a456-556642410002',100002,'HRApplication',false,false,true,'Pracownik_SME2','supportGroup@HRApplication.com'),
+    ('123e4567-e89b-42d3-a456-556642410003',100002,'QAApplication',false,true,false,'Pracownik_SME3','supportGroup@QAApplication.com');
+
+insert into APPLICATION_ROLE(ID, ROLE_NAME,APPLICATION_ID) VALUES
+    ('123e4567-e89b-42d3-a456-556642420001','customer service','123e4567-e89b-42d3-a456-556642410001'),
+    ('123e4567-e89b-42d3-a456-556642420002','branch manager','123e4567-e89b-42d3-a456-556642410001'),
+    ('123e4567-e89b-42d3-a456-556642420003','system admin','123e4567-e89b-42d3-a456-556642410001'),
+    ('123e4567-e89b-42d3-a456-556642420004','treasury specialist','123e4567-e89b-42d3-a456-556642410001'),
+    ('123e4567-e89b-42d3-a456-556642420005','recruiter','123e4567-e89b-42d3-a456-556642410002'),
+    ('123e4567-e89b-42d3-a456-556642420006','clerk','123e4567-e89b-42d3-a456-556642410002'),
+    ('123e4567-e89b-42d3-a456-556642420007','tester','123e4567-e89b-42d3-a456-556642410003'),
+    ('123e4567-e89b-42d3-a456-556642420008','system admin','123e4567-e89b-42d3-a456-556642410003');
+

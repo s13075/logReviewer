@@ -31,7 +31,7 @@ public abstract class InformationSecurityAdministrationEvent {
     private LocalDateTime eventDate;
 
     @ManyToOne
-    private InformationSecurityAdministrator informationSecurityAdministrator;
+    private MyUser informationSecurityAdministrator;
 
     @ManyToOne
     private Application application;

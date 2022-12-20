@@ -39,7 +39,7 @@ public class Escalation {
 
     @ManyToOne
     @NotNull
-    private InformationSecurityAdministrator informationSecurityAdministrator;
+    private MyUser informationSecurityAdministrator;
 
     @ManyToOne
     private MyUser informationSecurityAdministratorManager;

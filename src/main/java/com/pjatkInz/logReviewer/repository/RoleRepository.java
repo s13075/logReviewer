@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface RoleRepository extends JpaRepository<MyRole, UUID> {
     MyRole findByEnumRole(EMyRole rolename);
+
 }
