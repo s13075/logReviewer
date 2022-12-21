@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.HashSet;
@@ -24,7 +25,7 @@ public class LogReviewerApplication implements CommandLineRunner {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
-	MyUserDetailsService userDetailsService;
+	PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LogReviewerApplication.class, args);
@@ -50,13 +51,12 @@ public class LogReviewerApplication implements CommandLineRunner {
 
 		}
 		if(applicationUsers.size()==0) {
-
 			MyUser rootUser = new MyUser();
-			rootUser.setPassword("root123");
+			rootUser.setPassword(passwordEncoder.encode("root123"));
 			rootUser.setName("root");
 			rootUser.setSurname("root");
 			rootUser.setEmail("root@root.com");
-			rootUser.setEmpoleeId("RT1234");
+			rootUser.setEmploeeId("RT1234");
 			rootUser.setRoles(createdRoles);
 			userRepository.save(rootUser);
 		}

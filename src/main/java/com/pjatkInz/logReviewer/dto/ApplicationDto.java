@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationDto {
+
     private UUID id;
     private String name;
     private String inventoryNo;
@@ -22,4 +23,7 @@ public class ApplicationDto {
     private Boolean financialOperation;
     private String supportContactGroup;
     private String smeEmployee;
+
+
+    private String reviewerRefference;
 }

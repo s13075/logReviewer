@@ -34,7 +34,7 @@ public class MyUser {
 
     @Column
     @NotNull
-    private String empoleeId;
+    private String emploeeId;
 
     @Column
     @NotNull

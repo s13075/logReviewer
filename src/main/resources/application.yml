@@ -24,4 +24,14 @@ spring:
         platform: h2
 logging:
    level:
-      root: debug
+      root: info
+
+#endpoints values
+my-api:
+   baseURL: http://localhost:8080
+   version: /api/v1
+   applications: /applications
+   permissionsChange: /permissionsChange
+   permissionsRequest: /permissionsRequest
+
+
