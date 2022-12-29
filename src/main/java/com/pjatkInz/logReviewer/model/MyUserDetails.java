@@ -2,6 +2,7 @@ package com.pjatkInz.logReviewer.model;
 
 import java.util.*;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class MyUserDetails implements UserDetails {
 
+    @Getter
     private MyUser user;
 
     public MyUserDetails(MyUser user) {

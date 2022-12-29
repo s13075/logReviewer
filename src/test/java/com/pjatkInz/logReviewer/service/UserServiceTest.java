@@ -41,7 +41,7 @@ class UserServiceTest {
         when(userRepository.saveAndFlush(any())).thenReturn(getUser(id));
         when(userMapper.userDtoToUser(any())).thenReturn(getUser(id));
         //when(userMapper.userToUserDto(any())).thenReturn(getUserDto());
-        UUID uuid = myUserDetailsService.addUser(getUserDto());
+        UserDto uuid = myUserDetailsService.addUser(getUserDto());
         assertThat(uuid).isNotNull();
         assertThat(uuid).isEqualTo(id);
 

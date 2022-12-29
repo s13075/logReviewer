@@ -33,7 +33,6 @@ public class MyUser {
     private String surname;
 
     @Column
-    @NotNull
     private String emploeeId;
 
     @Column
