@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface PermissionsChangeRepository extends JpaRepository<PermissionsChange, UUID>  {
     List<PermissionsChange> findAll();
+
+    List<PermissionsChange> findPermissionsChangeByApplicationId(UUID fromString);
 }

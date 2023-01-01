@@ -34,6 +34,13 @@ public class PermissionsChangeService {
 
     }
 
+    public List<PermissionsChangeDto> getApplicationChanges(String id) {
+        Iterable<PermissionsChange> permissionsChanges = permissionsChangeRepository.findPermissionsChangeByApplicationId(UUID.fromString(id));
+        return StreamSupport.stream(permissionsChanges.spliterator(),false)
+                .map(convertPermissionsChangeToPermissionsChangeDto())
+                .collect(Collectors.toList());
+    }
+
     private Function<PermissionsChange, PermissionsChangeDto> convertPermissionsChangeToPermissionsChangeDto() {
         return permissionsChange -> permissionsChangeMapper.PermissionsChangeToPermissionsChangeDto(permissionsChange);
     }

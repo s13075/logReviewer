@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface PermissionsRequestRepository extends JpaRepository<PermissionsRequest, UUID>  {
     List<PermissionsRequest> findAll();
+
+    Iterable<PermissionsRequest> findPermissionsRequestByApplicationId(UUID fromString);
 }

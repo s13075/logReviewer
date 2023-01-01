@@ -1,6 +1,7 @@
 package com.pjatkInz.logReviewer.service;
 
 import com.pjatkInz.logReviewer.dto.ApplicationDto;
+import com.pjatkInz.logReviewer.dto.PermissionsChangeDto;
 import com.pjatkInz.logReviewer.dto.UserDto;
 import com.pjatkInz.logReviewer.dto.mapper.ApplicationMapper;
 import com.pjatkInz.logReviewer.dto.mapper.UserMapper;
@@ -59,4 +60,6 @@ public class ApplicationService {
                 .collect(Collectors.toList());
 
     }
+
+
 }

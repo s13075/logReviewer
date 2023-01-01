@@ -1,9 +1,13 @@
 package com.pjatkInz.logReviewer.controller;
 
 import com.pjatkInz.logReviewer.dto.ApplicationDto;
+import com.pjatkInz.logReviewer.dto.PermissionsChangeDto;
+import com.pjatkInz.logReviewer.dto.PermissionsRequestDto;
 import com.pjatkInz.logReviewer.dto.UserDto;
 import com.pjatkInz.logReviewer.service.ApplicationService;
 import com.pjatkInz.logReviewer.service.MyUserDetailsService;
+import com.pjatkInz.logReviewer.service.PermissionsChangeService;
+import com.pjatkInz.logReviewer.service.PermissionsRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +23,10 @@ public class ApplicationController {
 
     @Autowired
     private ApplicationService applicationService;
+    @Autowired
+    private PermissionsChangeService permissionsChangeService;
+    @Autowired
+    private PermissionsRequestService permissionsRequestService;
 
 
 
@@ -42,5 +50,17 @@ public class ApplicationController {
     public ResponseEntity<List<UserDto>> getApplicationReviewers(@PathVariable("id") String id) {
         List<UserDto> users = applicationService.getApplicationReviewers(id);
         return ResponseEntity.ok(users);
+    }
+    @GetMapping("/{id}/permissionsChange")
+    @PreAuthorize("hasRole('REVIEWER')")
+    public ResponseEntity<List<PermissionsChangeDto>> getApplicationPermissionsChanges(@PathVariable("id") String id) {
+        List<PermissionsChangeDto> permissionsChanges = permissionsChangeService.getApplicationChanges(id);
+        return ResponseEntity.ok(permissionsChanges);
+    }
+    @GetMapping("/{id}/permissionsRequest")
+    @PreAuthorize("hasRole('REVIEWER')")
+    public ResponseEntity<List<PermissionsRequestDto>> getApplicationPermissionsRequests(@PathVariable("id") String id) {
+        List<PermissionsRequestDto> permissionsRequests = permissionsRequestService.getApplicationRequests(id);
+        return ResponseEntity.ok(permissionsRequests);
     }
 }

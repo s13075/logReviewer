@@ -33,11 +33,18 @@ public class PermissionsRequestService {
         return StreamSupport.stream(permissionsRequests.spliterator(),false)
                 .map(convertPermissionsRequestToPermissionsRequestDto())
                 .collect(Collectors.toList());
+    }
 
+    public List<PermissionsRequestDto> getApplicationRequests(String id) {
+        Iterable<PermissionsRequest> permissionsRequests = permissionsRequestRepository.findPermissionsRequestByApplicationId(UUID.fromString(id));
+        return StreamSupport.stream(permissionsRequests.spliterator(),false)
+                .map(convertPermissionsRequestToPermissionsRequestDto())
+                .collect(Collectors.toList());
     }
 
     private Function<PermissionsRequest, PermissionsRequestDto> convertPermissionsRequestToPermissionsRequestDto() {
-        return permissionsRequest -> permissionsRequestMapper.PermissionsChangeToPermissionsChangeDto(permissionsRequest);
+        return permissionsRequest -> permissionsRequestMapper.PermissionsRequestToPermissionsRequestDto(permissionsRequest);
     }
+
 
 }

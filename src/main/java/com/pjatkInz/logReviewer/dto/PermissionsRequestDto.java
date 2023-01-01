@@ -23,12 +23,13 @@ public class PermissionsRequestDto {
 
     private UUID id;
     private LocalDateTime eventDate;
-    private MyUser informationSecurityAdministrator;
-    //private Application application;
-    //private ApplicationRole applicationRole;
-    //private MyUser subjectUser;
+    private String informationSecurityAdministratorEmploeeId;
+    private String applicationName;
+    private String applicationInventoryNo;
+    private String applicationRoleName;
+    private String subjectUserEmploeeId;
     private String requestNumber;
     private String status;
-    private MyUser approverUser;
+    private String approverUserEmploeeId;
 
 }

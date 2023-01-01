@@ -30,16 +30,16 @@ public abstract class InformationSecurityAdministrationEvent {
     @NotNull
     private LocalDateTime eventDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MyUser informationSecurityAdministrator;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Application application;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ApplicationRole applicationRole;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private MyUser subjectUser;
 
 }
