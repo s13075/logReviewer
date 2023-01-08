@@ -7,22 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationDto {
+public class JustificationHistoryDto {
 
     private UUID id;
-    private String name;
-    private String inventoryNo;
-    private Boolean piiData;
-    private Boolean criticalFunction;
-    private Boolean financialOperation;
-    private String supportContactGroup;
-    private String smeEmployee;
-
-    private String reviewerRefference;
+    private LocalDateTime createdDate;
+    private String changedBy;
+    private String newStatus;
+    private String oldStatus;
+    private String previousComment;
+    private String newComment;
 }

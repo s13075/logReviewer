@@ -16,7 +16,7 @@ public interface PermissionsRequestMapper {
     @Mapping(source = "informationSecurityAdministrator.emploeeId", target = "informationSecurityAdministratorEmploeeId")
     @Mapping(source = "subjectUser.emploeeId", target = "subjectUserEmploeeId")
     @Mapping(source = "approverUser.emploeeId", target = "approverUserEmploeeId")
-    PermissionsRequestDto PermissionsRequestToPermissionsRequestDto(PermissionsRequest permissionsRequest);
+    PermissionsRequestDto permissionsRequestToPermissionsRequestDto(PermissionsRequest permissionsRequest);
 
 
     PermissionsRequest permissionsRequestDtoToPermissionsRequest(PermissionsRequestDto permissionsRequestDto);

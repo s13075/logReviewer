@@ -11,4 +11,6 @@ public interface PermissionsChangeRepository extends JpaRepository<PermissionsCh
     List<PermissionsChange> findAll();
 
     List<PermissionsChange> findPermissionsChangeByApplicationId(UUID fromString);
+
+    PermissionsChange findPermissionsChangeById(UUID id);
 }

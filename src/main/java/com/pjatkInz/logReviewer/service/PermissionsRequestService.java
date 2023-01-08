@@ -1,12 +1,8 @@
 package com.pjatkInz.logReviewer.service;
 
-import com.pjatkInz.logReviewer.dto.PermissionsChangeDto;
 import com.pjatkInz.logReviewer.dto.PermissionsRequestDto;
-import com.pjatkInz.logReviewer.dto.mapper.PermissionsChangeMapper;
 import com.pjatkInz.logReviewer.dto.mapper.PermissionsRequestMapper;
-import com.pjatkInz.logReviewer.model.PermissionsChange;
 import com.pjatkInz.logReviewer.model.PermissionsRequest;
-import com.pjatkInz.logReviewer.repository.PermissionsChangeRepository;
 import com.pjatkInz.logReviewer.repository.PermissionsRequestRepository;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +39,7 @@ public class PermissionsRequestService {
     }
 
     private Function<PermissionsRequest, PermissionsRequestDto> convertPermissionsRequestToPermissionsRequestDto() {
-        return permissionsRequest -> permissionsRequestMapper.PermissionsRequestToPermissionsRequestDto(permissionsRequest);
+        return permissionsRequest -> permissionsRequestMapper.permissionsRequestToPermissionsRequestDto(permissionsRequest);
     }
 
 

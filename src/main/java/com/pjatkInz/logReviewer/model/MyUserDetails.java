@@ -41,6 +41,10 @@ public class MyUserDetails implements UserDetails {
         return user.getEmail();
     }
 
+    public String getEmploeeID() {
+        return user.getEmploeeId();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

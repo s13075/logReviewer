@@ -1,9 +1,7 @@
 package com.pjatkInz.logReviewer.service;
 
 import com.pjatkInz.logReviewer.dto.PermissionsChangeDto;
-import com.pjatkInz.logReviewer.dto.UserDto;
 import com.pjatkInz.logReviewer.dto.mapper.PermissionsChangeMapper;
-import com.pjatkInz.logReviewer.dto.mapper.PermissionsChangeMapperImpl;
 import com.pjatkInz.logReviewer.model.PermissionsChange;
 import com.pjatkInz.logReviewer.repository.PermissionsChangeRepository;
 import org.springframework.stereotype.Service;
@@ -41,8 +39,8 @@ public class PermissionsChangeService {
                 .collect(Collectors.toList());
     }
 
-    private Function<PermissionsChange, PermissionsChangeDto> convertPermissionsChangeToPermissionsChangeDto() {
-        return permissionsChange -> permissionsChangeMapper.PermissionsChangeToPermissionsChangeDto(permissionsChange);
+    public Function<PermissionsChange, PermissionsChangeDto> convertPermissionsChangeToPermissionsChangeDto() {
+        return permissionsChange -> permissionsChangeMapper.permissionsChangeToPermissionsChangeDto(permissionsChange);
     }
 
     public UUID PermissionsChange(PermissionsChangeDto permissionsChangeDto){

@@ -99,4 +99,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
         return new GrantedAuthorityDefaults("");
     }
+
 }

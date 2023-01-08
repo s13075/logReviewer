@@ -33,5 +33,7 @@ my-api:
    applications: /applications
    permissionsChange: /permissionsChange
    permissionsRequest: /permissionsRequest
+   reconciliation: /reconciliation
+   justification: /justification
 
 

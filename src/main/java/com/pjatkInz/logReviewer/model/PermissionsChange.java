@@ -1,14 +1,9 @@
 package com.pjatkInz.logReviewer.model;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 public class PermissionsChange extends InformationSecurityAdministrationEvent{
 
     @Column
@@ -23,8 +19,9 @@ public class PermissionsChange extends InformationSecurityAdministrationEvent{
     private String additionalDetails;
 
 
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECONCILIATION_ID", insertable = false, updatable = false)
+    private Reconciliation reconciliation;
 
 
 

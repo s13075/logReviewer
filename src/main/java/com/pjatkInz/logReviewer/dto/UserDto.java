@@ -22,7 +22,6 @@ public class UserDto {
     private String name;
     @NotNull
     private String surname;
-
     private String emploeeId;
     @NotNull
     private String email;

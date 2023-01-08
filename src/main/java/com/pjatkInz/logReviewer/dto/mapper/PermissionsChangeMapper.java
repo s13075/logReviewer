@@ -17,6 +17,6 @@ public interface PermissionsChangeMapper {
     @Mapping(source = "applicationRole.roleName", target = "applicationRoleName")
     @Mapping(source = "informationSecurityAdministrator.emploeeId", target = "informationSecurityAdministratorEmploeeId")
     @Mapping(source = "subjectUser.emploeeId", target = "subjectUserEmploeeId")
-    PermissionsChangeDto PermissionsChangeToPermissionsChangeDto(PermissionsChange permissionsChange);
+    PermissionsChangeDto permissionsChangeToPermissionsChangeDto(PermissionsChange permissionsChange);
 
 }
