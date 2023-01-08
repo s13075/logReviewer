@@ -45,6 +45,7 @@ public class JustificationService {
         justificationHistoryRepository.save(justificationHistory);
 
         justification.setCurentStatus(justificationDto.getCurentStatus());
+        justification.setLastComment(justificationDto.getLastComment());
         justification.getJustificationHistorySet().add(justificationHistory);
         justificationRepository.saveAndFlush(justification);
         return convertJustificationToJustificationDto().apply(justification);
