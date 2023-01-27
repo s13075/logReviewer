@@ -27,4 +27,5 @@ public class PermissionsRequest extends InformationSecurityAdministrationEvent{
 
     @ManyToOne
     private MyUser approverUser;
+
 }

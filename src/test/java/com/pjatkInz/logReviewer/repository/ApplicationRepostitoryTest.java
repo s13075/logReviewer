@@ -38,7 +38,7 @@ public class ApplicationRepostitoryTest {
     @Test
     @Sql(scripts={"classpath:insertInitialApplicationRecordsForTest.sql"})
     void shouldReturnOneApplicationWhenTitleIsTestApplicationIgnoreCase(){
-        List<Application> testApplication = applicationRepostitory.findApplicationsByNameIgnoreCase("testapplication");
+        List<Application> testApplication = applicationRepostitory.findApplicationsByNameStartsWithIgnoreCase("testapplication");
         Assertions.assertEquals(testApplication.size(),1);
     }
 }

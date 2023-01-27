@@ -21,7 +21,7 @@ public class PermissionsRequestController {
     private PermissionsRequestService permissionsRequestService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<List<PermissionsRequestDto>> getPermissionsRequests(){
         List<PermissionsRequestDto> permissionsRequestDtoList = permissionsRequestService.getPermissionsRequests();
         return ResponseEntity.ok(permissionsRequestDtoList);

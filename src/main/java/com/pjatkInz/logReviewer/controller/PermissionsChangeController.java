@@ -20,7 +20,7 @@ public class PermissionsChangeController {
     private PermissionsChangeService permissionsChangeService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<List<PermissionsChangeDto>> getPermissionsChanges(){
         List<PermissionsChangeDto> permissionsChangeDtoList = permissionsChangeService.getPermissionsChanges();
         return ResponseEntity.ok(permissionsChangeDtoList);

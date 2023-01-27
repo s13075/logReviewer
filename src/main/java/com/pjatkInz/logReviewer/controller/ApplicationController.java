@@ -21,24 +21,22 @@ import java.util.UUID;
 @RequestMapping("${my-api.version}"+"${my-api.applications}")
 public class ApplicationController {
 
+
     @Autowired
     private ApplicationService applicationService;
     @Autowired
     private PermissionsChangeService permissionsChangeService;
     @Autowired
     private PermissionsRequestService permissionsRequestService;
-
-
-
     @GetMapping
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER')")
     public ResponseEntity<List<ApplicationDto>> getApplications(){
         List<ApplicationDto> applications = applicationService.getApplications();
         return ResponseEntity.ok(applications);
     }
 
     @GetMapping("/{title}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER')")
     public ResponseEntity<List<ApplicationDto>> getApplicationsByName(@PathVariable("title") String title) {
         List<ApplicationDto> applications = applicationService.getApplicationsByName(title);
         return ResponseEntity.ok(applications);
@@ -46,19 +44,22 @@ public class ApplicationController {
 
 
     @GetMapping("/{id}/reviewers")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER')")
     public ResponseEntity<List<UserDto>> getApplicationReviewers(@PathVariable("id") String id) {
         List<UserDto> users = applicationService.getApplicationReviewers(id);
         return ResponseEntity.ok(users);
     }
+
     @GetMapping("/{id}/permissionsChange")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER')")
     public ResponseEntity<List<PermissionsChangeDto>> getApplicationPermissionsChanges(@PathVariable("id") String id) {
         List<PermissionsChangeDto> permissionsChanges = permissionsChangeService.getApplicationChanges(id);
         return ResponseEntity.ok(permissionsChanges);
     }
+
+
     @GetMapping("/{id}/permissionsRequest")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER')")
     public ResponseEntity<List<PermissionsRequestDto>> getApplicationPermissionsRequests(@PathVariable("id") String id) {
         List<PermissionsRequestDto> permissionsRequests = permissionsRequestService.getApplicationRequests(id);
         return ResponseEntity.ok(permissionsRequests);

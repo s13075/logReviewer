@@ -11,4 +11,5 @@ public interface PermissionsRequestRepository extends JpaRepository<PermissionsR
     List<PermissionsRequest> findAll();
 
     Iterable<PermissionsRequest> findPermissionsRequestByApplicationId(UUID fromString);
+   //Iterable<PermissionsRequest> findPermissionsRequestByApplicationIdAndReconciliationIsNull(UUID fromString);
 }

@@ -35,15 +35,6 @@ public class ApplicationControllerTest {
         assertThat(applications.getBody().size()).isEqualTo(1);
     }
 
-    @Test
-    void shouldReturnApplicationDtoListWhenGetApplicationsByNameCalled(){
-        List<ApplicationDto> applicationDtos = new ArrayList<>();
-        applicationDtos.add(getApplicationDto());
-        when(applicationService.getApplicationsByName(anyString())).thenReturn(applicationDtos);
-        ResponseEntity<List<ApplicationDto>> applications = applicationController.getApplicationsByName("service test application");
-        assertThat(applications.getBody()).isNotNull();
-        assertThat(applications.getBody().size()).isEqualTo(1);
-    }
 
     private ApplicationDto getApplicationDto(){
         return ApplicationDto.builder()

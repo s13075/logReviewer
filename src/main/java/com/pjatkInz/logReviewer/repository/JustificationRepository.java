@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JustificationRepository extends JpaRepository<Justification, UUID> {
+
     List<Justification> findAll();
+    List<Justification> findByAssignedReviewerId(UUID id);
+    List<Justification> findByAssignedISAId(UUID id);
 
 }

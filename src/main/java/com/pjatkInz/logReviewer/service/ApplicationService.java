@@ -7,7 +7,11 @@ import com.pjatkInz.logReviewer.dto.mapper.ApplicationMapper;
 import com.pjatkInz.logReviewer.dto.mapper.UserMapper;
 import com.pjatkInz.logReviewer.model.Application;
 import com.pjatkInz.logReviewer.model.MyUser;
+import com.pjatkInz.logReviewer.model.MyUserDetails;
 import com.pjatkInz.logReviewer.repository.ApplicationRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,14 +27,42 @@ public class ApplicationService {
     private final ApplicationMapper applicationMapper;
     private final UserMapper userMapper;
 
-    public ApplicationService(ApplicationRepository applicationRepository, ApplicationMapper applicationMapper, UserMapper userMapper){
+    public ApplicationService(ApplicationRepository applicationRepository,
+                              ApplicationMapper applicationMapper,
+                              UserMapper userMapper){
         this.applicationRepository = applicationRepository;
         this.applicationMapper = applicationMapper;
         this.userMapper = userMapper;
     }
 
     public List<ApplicationDto> getApplications() {
-        Iterable<Application> applications = applicationRepository.findAll();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER_MANAGER"))) {
+            return getAllApplications();
+        }
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER"))) {
+            return getReviewerApplications();
+        }
+        return null;
+    }
+
+
+    @PreAuthorize("hasRole('REVIEWER_MANAGER')")
+    private List<ApplicationDto> getAllApplications(){
+        Iterable<Application> applications = null;
+
+        applications = applicationRepository.findAll();
+        return StreamSupport.stream(applications.spliterator(),false)
+                .map(convertApplicationToApplicationDto())
+                .collect(Collectors.toList());
+
+    }
+    @PreAuthorize("hasRole('REVIEWER')")
+    private List<ApplicationDto> getReviewerApplications() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Iterable<Application> applications = applicationRepository.findApplicationsByReviewersId(userDetails.getUser().getId());
         return StreamSupport.stream(applications.spliterator(),false)
                 .map(convertApplicationToApplicationDto())
                 .collect(Collectors.toList());
@@ -47,7 +79,29 @@ public class ApplicationService {
 
 
     public List<ApplicationDto> getApplicationsByName(String name) {
-        Iterable<Application> applications = applicationRepository.findApplicationsByNameIgnoreCase(name);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER_MANAGER"))) {
+            return getAllApplicationsByName(name);
+        }
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER"))) {
+            return getReviewerApplicationsByName(name);
+        }
+        return null;
+    }
+
+    @PreAuthorize("hasRole('REVIEWER_MANAGER')")
+    public List<ApplicationDto> getAllApplicationsByName(String name) {
+        Iterable<Application> applications = applicationRepository.findApplicationsByNameStartsWithIgnoreCase(name);
+        return StreamSupport.stream(applications.spliterator(),false)
+                .map(convertApplicationToApplicationDto())
+                .collect(Collectors.toList());
+    }
+
+    @PreAuthorize("hasRole('REVIEWER')")
+    public List<ApplicationDto> getReviewerApplicationsByName(String title) {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Iterable<Application> applications = applicationRepository.findApplicationsByReviewersIdAndNameStartsWithIgnoreCase(userDetails.getUser().getId(), title);
         return StreamSupport.stream(applications.spliterator(),false)
                 .map(convertApplicationToApplicationDto())
                 .collect(Collectors.toList());

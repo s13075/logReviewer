@@ -23,6 +23,4 @@ public class PermissionsChange extends InformationSecurityAdministrationEvent{
     @JoinColumn(name = "RECONCILIATION_ID", insertable = false, updatable = false)
     private Reconciliation reconciliation;
 
-
-
 }

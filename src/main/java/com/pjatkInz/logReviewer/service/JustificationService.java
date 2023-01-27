@@ -5,9 +5,12 @@ import com.pjatkInz.logReviewer.dto.PermissionsChangeDto;
 import com.pjatkInz.logReviewer.dto.mapper.JustificationMapper;
 import com.pjatkInz.logReviewer.model.Justification;
 import com.pjatkInz.logReviewer.model.JustificationHistory;
+import com.pjatkInz.logReviewer.model.MyUserDetails;
 import com.pjatkInz.logReviewer.model.PermissionsChange;
 import com.pjatkInz.logReviewer.repository.JustificationHistoryRepository;
 import com.pjatkInz.logReviewer.repository.JustificationRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,5 +72,23 @@ public class JustificationService {
         return StreamSupport.stream(permissionsChangeSet.spliterator(),false)
                 .map(permissionsChangeService.convertPermissionsChangeToPermissionsChangeDto())
                 .collect(Collectors.toList());
+    }
+
+    public List<JustificationDto> getReviewerJustifications() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Justification> justifications =  justificationRepository.findByAssignedReviewerId(userDetails.getUser().getId());
+        return StreamSupport.stream(justifications.spliterator(),false)
+                .map(convertJustificationToJustificationDto())
+                .collect(Collectors.toList());
+
+    }
+
+    public List<JustificationDto> getReviewedAdminJustifications() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Justification> justifications =  justificationRepository.findByAssignedISAId(userDetails.getUser().getId());
+        return StreamSupport.stream(justifications.spliterator(),false)
+                .map(convertJustificationToJustificationDto())
+                .collect(Collectors.toList());
+
     }
 }

@@ -65,7 +65,7 @@ public class MyUserDetailsService implements UserDetailsService {
         user.setRoles(roles);
 
         MyUser createdUser = userRepository.saveAndFlush(user);
-        createdUser.setPassword("***");
+        createdUser.setPassword("********");
         return convertUserToUserDto().apply(createdUser);
     }
     public UserDto addUserWithRoles(UserDto userDto, Set<MyRole> roles){
@@ -83,7 +83,7 @@ public class MyUserDetailsService implements UserDetailsService {
         user.setRoles(attached);
 
         MyUser createdUser = userRepository.saveAndFlush(user);
-        createdUser.setPassword("***");
+        createdUser.setPassword("********");
 
         return convertUserToUserDto().apply(createdUser);
     }
@@ -102,7 +102,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return StreamSupport.stream(users.spliterator(),false)
                 .map(convertUserToUserDto())
-                .peek(user -> user.setPassword(("***")))
+                .peek(user -> user.setPassword(("********")))
                 .collect(Collectors.toList());
     }
 
@@ -112,7 +112,7 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new RuntimeException("MyUser with id: " + emploeeId + " does not exist");
         }
         UserDto userDto = convertUserToUserDto().apply(user);
-        userDto.setPassword("***");
+        userDto.setPassword("********");
         return userDto;
 
     }
@@ -127,7 +127,9 @@ public class MyUserDetailsService implements UserDetailsService {
         if(Objects.isNull(user)) {
             throw new RuntimeException("MyUser with id: " + emploeeId + " does not exist");
         }
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        if(userDto.getPassword() !=null ) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
         user.setName(userDto.getName());
         user.setSurname(userDto.getSurname());
         user.setEmail(userDto.getEmail());
@@ -138,9 +140,8 @@ public class MyUserDetailsService implements UserDetailsService {
             roles.add(atachedRole);
         }
         user.setRoles(roles);
-
         MyUser updatedUser = userRepository.saveAndFlush(user);
-        updatedUser.setPassword("***");
+        updatedUser.setPassword("********");
         return convertUserToUserDto().apply(updatedUser);
     }
     private String generateEmploeeId(UserDto userDto){
@@ -149,7 +150,6 @@ public class MyUserDetailsService implements UserDetailsService {
         List<MyUser> usersStartingLikeThis = userRepository.findByEmploeeIdStartsWith(emploeeIdStartLetters);
         Integer userNumber = usersStartingLikeThis.size() + 1;
         String emploeeId = emploeeIdStartLetters + StringUtils.leftPad(userNumber.toString(), 4, "0");
-
         return emploeeId;
 
     }

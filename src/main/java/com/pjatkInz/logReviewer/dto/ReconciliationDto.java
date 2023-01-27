@@ -25,7 +25,9 @@ public class ReconciliationDto {
     private UUID id;
     private String status;
     private LocalDateTime startDate;
+    @NotNull
     private Set<PermissionsChangeDto> ofPermisionChanges;
     private PermissionsRequestDto permissionsRequest;
     private JustificationDto justification;
+    private String lastComment;
 }

@@ -33,7 +33,7 @@ public class PermissionsChangeService {
     }
 
     public List<PermissionsChangeDto> getApplicationChanges(String id) {
-        Iterable<PermissionsChange> permissionsChanges = permissionsChangeRepository.findPermissionsChangeByApplicationId(UUID.fromString(id));
+        Iterable<PermissionsChange> permissionsChanges = permissionsChangeRepository.findPermissionsChangeByApplicationIdAndReconciliationIsNull(UUID.fromString(id));
         return StreamSupport.stream(permissionsChanges.spliterator(),false)
                 .map(convertPermissionsChangeToPermissionsChangeDto())
                 .collect(Collectors.toList());

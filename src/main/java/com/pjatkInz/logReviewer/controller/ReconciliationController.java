@@ -19,20 +19,20 @@ public class ReconciliationController {
     private ReconciliationService reconciliationService;
 
     @PostMapping("/requested")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<ReconciliationDto> reconcileWithRequest(@Valid @RequestBody ReconciliationDto reconciliationDto){
         ReconciliationDto createdReconciliation = reconciliationService.reconcilePermissionsChangeWithRequest(reconciliationDto);
         return ResponseEntity.ok(createdReconciliation);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<List<ReconciliationDto>> listReconciliations(){
         List<ReconciliationDto> reconciliations = reconciliationService.getAllReconciliations();
         return ResponseEntity.ok(reconciliations);
     }
     @PostMapping("/justified")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<ReconciliationDto> reconcileWithJustification(@Valid @RequestBody ReconciliationDto reconciliationDto){
         ReconciliationDto createdReconciliation = null;
         try {

@@ -58,7 +58,7 @@ public class ApplicationServiceTest {
         Application application = getApplication();
         applications.add(application);
         ApplicationDto applicationDto = getApplicationDto();
-        when(applicationRepository.findApplicationsByNameIgnoreCase(anyString())).thenReturn(Collections.singletonList(getApplication()));
+        when(applicationRepository.findApplicationsByNameStartsWithIgnoreCase(anyString())).thenReturn(Collections.singletonList(getApplication()));
         when(applicationMapper.applicationToApplicationDto(application)).thenReturn(applicationDto);
         List<ApplicationDto> applicationDtos = applicationService.getApplicationsByName("service test application");
         assertThat(applicationDtos.size()).isEqualTo(1);

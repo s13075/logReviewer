@@ -88,9 +88,10 @@ public class ReconciliationService {
         MyUser creatingUser = getUserCreateingReconciliation().get();
         reconciliation.setOfPermisionChanges(permisionChanges);
         Justification justification = new Justification();
-        justification.setCurentStatus("PENDING ADMIN JUSTIFICATION");
+        justification.setCurentStatus("PENDING_ADMIN");
         justification.setReconciliation(reconciliation);
         justification.setAssignedReviewer(creatingUser);
+        justification.setLastComment(reconciliationDto.getLastComment());
         justification.setAssignedISA(adminUser);
         reconciliation.setJustification(justification);
         justificationRepository.save(justification);

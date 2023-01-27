@@ -3,8 +3,8 @@ spring:
       generate-unique-name: false
       name: my-test-db
       url: jdbc:h2:mem:my-test-db
-      username: sa
-      password:
+      username: S13075
+      password: S13075
       hikari:
          connection-test-query: SELECT 1
 

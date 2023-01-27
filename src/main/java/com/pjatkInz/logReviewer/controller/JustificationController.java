@@ -22,18 +22,32 @@ public class JustificationController {
     private JustificationService justificationService;
 
     @PutMapping("/{justificationId}")
-    @PreAuthorize("hasRole('REVIEWER')")
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
     public ResponseEntity<JustificationDto> updateJustification(@PathVariable("justificationId") UUID justificationId, @Valid @RequestBody JustificationDto justificationDto){
         JustificationDto justificationAfterUpdate = justificationService.updateJustification(justificationId, justificationDto);
         return ResponseEntity.ok(justificationAfterUpdate);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('REVIEWER') OR hasRole('REVIEWER_MANAGER') OR hasRole('REVIEWED_ISA')")
-    public ResponseEntity<List<JustificationDto>> getJustification(){
+    @PreAuthorize("hasAnyRole('REVIEWER','REVIEWER_MANAGER','REVIEWED_ISA')")
+    public ResponseEntity<List<JustificationDto>> getAllJustifications(){
         List<JustificationDto> justifications = justificationService.getJustifications();
         return ResponseEntity.ok(justifications);
     }
+
+//    @GetMapping
+//    @PreAuthorize("hasRole('REVIEWER')")
+//    public ResponseEntity<List<JustificationDto>> getReviewerJustifications(){
+//        List<JustificationDto> justifications = justificationService.getReviewerJustifications();
+//        return ResponseEntity.ok(justifications);
+//    }
+//
+//    @GetMapping
+//    @PreAuthorize("hasRole('REVIEWED_ISA')")
+//    public ResponseEntity<List<JustificationDto>> getReviewedAdminJustifications(){
+//        List<JustificationDto> justifications = justificationService.getReviewedAdminJustifications();
+//        return ResponseEntity.ok(justifications);
+//    }
 
     @GetMapping("/{justificationId}/permissionChanges")
     @PreAuthorize("hasRole('REVIEWER') OR hasRole('REVIEWER_MANAGER') OR hasRole('REVIEWED_ISA')")
