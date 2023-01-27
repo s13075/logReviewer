@@ -35,19 +35,6 @@ public class JustificationController {
         return ResponseEntity.ok(justifications);
     }
 
-//    @GetMapping
-//    @PreAuthorize("hasRole('REVIEWER')")
-//    public ResponseEntity<List<JustificationDto>> getReviewerJustifications(){
-//        List<JustificationDto> justifications = justificationService.getReviewerJustifications();
-//        return ResponseEntity.ok(justifications);
-//    }
-//
-//    @GetMapping
-//    @PreAuthorize("hasRole('REVIEWED_ISA')")
-//    public ResponseEntity<List<JustificationDto>> getReviewedAdminJustifications(){
-//        List<JustificationDto> justifications = justificationService.getReviewedAdminJustifications();
-//        return ResponseEntity.ok(justifications);
-//    }
 
     @GetMapping("/{justificationId}/permissionChanges")
     @PreAuthorize("hasRole('REVIEWER') OR hasRole('REVIEWER_MANAGER') OR hasRole('REVIEWED_ISA')")

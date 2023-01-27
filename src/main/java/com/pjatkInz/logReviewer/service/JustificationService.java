@@ -9,6 +9,8 @@ import com.pjatkInz.logReviewer.model.MyUserDetails;
 import com.pjatkInz.logReviewer.model.PermissionsChange;
 import com.pjatkInz.logReviewer.repository.JustificationHistoryRepository;
 import com.pjatkInz.logReviewer.repository.JustificationRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,40 @@ public class JustificationService {
     }
 
     public List<JustificationDto> getJustifications() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER_MANAGER"))) {
+            return getAllJustifications();
+        }
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWER"))) {
+            return getReviewerJustifications(userDetails);
+        }
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("REVIEWED_ISA"))) {
+            return getReviewedAdminJustifications(userDetails);
+        }
+        return null;
+    }
+
+    @PreAuthorize("hasRole('REVIEWER_MANAGER')")
+    public List<JustificationDto> getAllJustifications() {
         List<Justification> justifications =  justificationRepository.findAll();
+        return StreamSupport.stream(justifications.spliterator(),false)
+                .map(convertJustificationToJustificationDto())
+                .collect(Collectors.toList());
+    }
+    @PreAuthorize("hasRole('REVIEWER')")
+    public List<JustificationDto> getReviewerJustifications(MyUserDetails userDetails) {
+        List<Justification> justifications =  justificationRepository.findByAssignedReviewerId(userDetails.getUser().getId());
+        return StreamSupport.stream(justifications.spliterator(),false)
+                .map(convertJustificationToJustificationDto())
+                .collect(Collectors.toList());
+
+    }
+
+    @PreAuthorize("hasRole('REVIEWED_ISA')")
+    public List<JustificationDto> getReviewedAdminJustifications(MyUserDetails userDetails) {
+        List<Justification> justifications =  justificationRepository.findByAssignedISAId(userDetails.getUser().getId());
         return StreamSupport.stream(justifications.spliterator(),false)
                 .map(convertJustificationToJustificationDto())
                 .collect(Collectors.toList());
@@ -74,21 +109,5 @@ public class JustificationService {
                 .collect(Collectors.toList());
     }
 
-    public List<JustificationDto> getReviewerJustifications() {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Justification> justifications =  justificationRepository.findByAssignedReviewerId(userDetails.getUser().getId());
-        return StreamSupport.stream(justifications.spliterator(),false)
-                .map(convertJustificationToJustificationDto())
-                .collect(Collectors.toList());
 
-    }
-
-    public List<JustificationDto> getReviewedAdminJustifications() {
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Justification> justifications =  justificationRepository.findByAssignedISAId(userDetails.getUser().getId());
-        return StreamSupport.stream(justifications.spliterator(),false)
-                .map(convertJustificationToJustificationDto())
-                .collect(Collectors.toList());
-
-    }
 }
